@@ -1,21 +1,63 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<X-Robots-Tag name="otherbot" content="noindex, nofollow">
+<meta name="robots" content="max-snippet:0">
+<meta name="robots" content="nofollow">
+<meta name="googlebot" content="noindex">
+	<head>
 
-<head>
+		<link href="https://unpkg.com/videojs-max-quality-selector@0.9.1/dist/videojs-max-quality-selector.css" rel="stylesheet">
+		<script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.20.1/video.min.js"></script>
+		
+		<style>
+html {overflow: hidden;}
+body {background:black;padding:0;margin:0;}
 
-<script src="https://tvradiozap.eu/js/open60.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/video.js@latest/dist/video.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/video.js@latest/dist/video-js.min.css" rel="stylesheet">
+#tvrzInfos {font-size:1.7em;padding-bottom:2px;}	/*bouton d'ouverture de l'info tech */
+#tvrzInfos > * {z-index:999999;font-size:smaller;display:none; position:absolute; margin-top:-12em;margin-left:-20em; right:10px;
+				text-align:left; padding:10px;color:black; background:lightgrey;	border-radius: 10px; outline:1px solid black;}
+#tvrzInfos:hover > * {
+	display:block;
+    animation: 1s menuOn;
+	opacity:0;
+	animation-fill-mode: forwards;
+	visibility: visible;
+  }
+		</style>
+<script src="https://vsalema.github.io/play3/js/open52.js"></script>
 
-<!-- alternatives avec N°de version. ENLEVER .min pour fichier non compressés
-enlevé du head suite pb avec youtube : <meta name="referrer" content="no-referrer">
-<link href="https://cdn.jsdelivr.net/npm/video.js@8.22.0/dist/video.min.js" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/video.js@8.22.0/dist/video-js.min.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.cs">
 
-<!-- alternatives locales pour dépannage
-<script src="https://tvradiozap.eu/js/video-8.22.0.js"></script>
-<link href="https://tvradiozap.eu/css/videojs-8.22.0.css" rel="stylesheet">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.0/css/nice-select.css">
+
+<link rel="stylesheet" href="https://www.goiptv.top/site_assets/css/font-awesome.min.css">
+
+   
+<link rel="stylesheet" href="https://www.goiptv.top/site_assets/css/splide.min.css">
+
+
+
+<!-- Splide Slider CSS -->
+
+
+
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800&display=swap" rel="stylesheet">
+
+ 
+ <link rel="stylesheet" href="https://vsalema.github.io/tvpt4/css/tresmin.css" rel="stylesheet" type="text/css">
+<script src="https://unpkg.com/video.js/dist/video.min.jsxx"></script>
+
+
+
+
+<!-- <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
+<script src="https://unpkg.com/video.js/dist/video.js"></script>-->
 
 
 <!-- Nécessaires pour affichage des temps, ainsi qu'options player 'currentTimeDisplay', 'timeDivider', 'durationDisplay' à mettre à true
@@ -29,36 +71,43 @@ enlevé du head suite pb avec youtube : <meta name="referrer" content="no-referr
   display: inline-block !important;
 }
 -->
-<style type="text/css">
+<!-- <style type="text/css">
 html {overflow: hidden;}
 body {background:black;padding:0;margin:0;}
 
-#tvrzInfos, #tvrzQuals {font-size:4.5cqw;}	/*boutons d'ouverture de info tech et qualité */
-
-#tvrzInfoContainer, #tvrzQualContainer {display:none; font-size: 2.8cqw; z-index:999999;position:absolute; margin-left:-300%;right:0;
-				padding:7px;outline:1px solid black;}
-				
-#tvrzInfoContainer {bottom:140%; text-align:left; color:black; border-radius: 10px; opacity:0.75; background:lightgrey; }
-#tvrzQualContainer {bottom:100%; text-align:right; color:white; cursor: pointer; background:rgba(70, 70, 70, 0.7);}
-
-#tvrzQualContainer > * {padding:3px;} 
-#tvrzQualContainer > *:not(:first-child):hover {background:grey;}
-	
-#video1{
-	object-position: center;
-	width: 100%;
+#tvrzInfos {font-size:1.7em;padding-bottom:2px;}	/*bouton d'ouverture de l'info tech */
+#tvrzInfos > * {z-index:999999;font-size:smaller;display:none; position:absolute; margin-top:-12em;margin-left:-20em; right:10px;
+				text-align:left; padding:10px;color:black; background:lightgrey;	border-radius: 10px; outline:1px solid black;}
+#tvrzInfos:hover > * {
+	display:block;
+    animation: 1s menuOn;
+	opacity:0;
+	animation-fill-mode: forwards;
+	visibility: visible;
+  }
+@keyframes menuOn{	
+	0% {visibility: hidden}
+	80% {opacity:0;}
+	100% {opacity:0.75;}  
 }
 
 
+
+.vjs-control-bar {font-size: calc(4px + 2vw); /*on augmente épaisseurs contrôles, taille semi-proportionnelle à écran*/
+}
+	
 .video-js .vjs-progress-control {
     position:absolute;
     width: calc(100% - 25px);
-    top:-10px;
+    top:0;
 	left:0;
-    height:3px; /* à ajuster pour que barre suffisamment haute n'est pas d'interférence sur click d'éléments au-dessous */
+    height:3px;
+    /* deal with resulting gap between progress control and control bar that
+       is the result of the attempt to keep things "clickable" on the controls */
     background-color: #2B333F;
     background-color: rgba(43, 51, 63, 0.7);
 }
+
 .video-js .vjs-progress-holder {
     position:absolute;
     margin:0px;
@@ -66,86 +115,138 @@ body {background:black;padding:0;margin:0;}
     width:100%;
 }
 
-.vjs-control-bar {font-size: 2.5cqw;}	/*taille semi-proportionnelle à écran*/
-.video-js .vjs-control {flex:1};
-
-/* correction de la barre de volume, suite à flex:1 dnas .video-js .vjs-control */
-.vjs-volume-panel {margin-right:-1em !important;}
-.vjs-volume-vertical {margin-left:1.5em !important;	margin-right:-1.5em !important;}
-
-.vjs-text-track-display div {
-  font-size: 4cqw !important;
+/*
+.video-js .vjs-volume-panel.vjs-volume-panel-horizontal.vjs-hover, .video-js .vjs-volume-panel.vjs-volume-panel-horizontal:active, .video-js .vjs-volume-panel.vjs-volume-panel-horizontal.vjs-slider-active {
+  width: 50em !important;
+  transition: width 0.1s;
+}*/
+.video-js .vjs-volume-panel.vjs-volume-panel-horizontal.vjs-mute-toggle-only {
+  width: 50em !important;
+}
+.vjs-volume-bar.vjs-slider-horizontal {
+  width: 50em !important;
 }
 
-/*bouton "LIVE" trop grand */
-.vjs-seek-to-live-text{font-stretch: condensed !important; font-size:smaller !important;}
+/* aspect-ratio 4-1 en audio. videojs met padding-top:56.25% pour du 16/9 par la class : .video2-dimensions.vjs-fluid:not(.vjs-audio-only-mode)*/
+body[data-av="audio"] #video1 {padding-top:25%;} 	
 
-/* aspect-ratio en audio. videojs met padding-top:56.25% pour du 16/9 par la class : .video2-dimensions.vjs-fluid:not(.vjs-audio-only-mode)*/
-body[data-av="audio"] #video1 {padding-top:25%;} 	/*25% pour 4/1, 20% pour 5/1... */
 
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background: black;
+
+</style> -->
+<link rel="stylesheet" type="text/css" href="https://tvradiozap.eu/css/tvrz52.css" />	
+	<style>
+.video-js.vjs-16-9 {
+  padding-top: 45.3%;
 }
-
-/* Le player doit remplir tout l’espace */
-#video1 {
-  width: 100%;
-  height: 100vh;   /* important : 100% de la hauteur */
-  object-fit: cover; /* évite les bandes noires */
-}
-
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background: black;
-}
-
-/* Conteneur du player plein écran */
-#video1 {
-  width: 100vw;
-  height: 100vh;
-}
-
-/* Vidéo à l'intérieur du player */
-.video-js .vjs-tech {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;   /* 🔴 important : on voit TOUTE l'image */
-  object-position: center;
-}
-
-</style>
-
-</head>
+		
+	</style>
+	
+	</head>
 
 
 <body>
 	
+
+
+
+<script>
+	var el = document.getElementsByName('v')[0];
+	el.addEventListener("keypress", goPlay, false);
+	function goPlay(e){
+		if (e.keyCode === 13)
+			play();
+	}
+	
+	//initialiser le champ d'input avec l'éventuelle url en query
+	var url = decodeURIComponent(window.location.search.substring(1));	//retourne la query sans "?"
+	url = url.replace(/%20/g, " ");		//NB decodeURI ne touche pas aux espaces
+	el.value=url;						//query de l'url mise dans l'input
+
+function play() {
+
+	//l'historique est conservé mais la page non rechargée car seul la query change
+	history.pushState( {}, null, '/tools/joue.html?'+(url = decodeURIComponent(el.value)) );
+	
+	if (url.substring(0,5)==='https')
+		window.open(decodeURIComponent('https://vsalema.github.io/play2/?'+url),'ecoute');	//même nom de target que depuis index.php mais pas même browser context => pas le même TAB
+	else
+		window.open(decodeURIComponent('https://vsalema.github.io/play2/?'+url),'ecoute');	//même nom de target que depuis index.php mais pas même browser context => pas le même TAB
+	return false;
+}
+
+</script>
+
+	
+	<div class="player-wrapper">
+	<video data-dashjs-player id="video1" class="js-video video-js vjs-responsive vjs-big-play-centered vjs-16-9" width='920'  height='520' poster="" autoplay controls preload="auto">
+<!--	<source src="https://tvradiozap.eu/index.php/640" type="application/x-mpegURL">
+		<source src="https://icecast.radiofrance.fr/franceculture-hifi.aac">
+		<source src="https://artesimulcast.akamaized.net/hls/live/2031003-b/artelive_fr/master_v720.m3u8" type="application/x-mpegURL">
+		<source src="https://tv7.live-kd.com/live/tv7/ngrp:tv7_Wifi/manifest.mpd" type="application/dash+xml"> -->
+          </video>
+
+</div>
+
+	<script src="https://play.shidur.net/node_modules/video.js/dist/video.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.6.0/Youtube.min.js'></script>
+
+	
+	<script src="https://players.brightcove.net/videojs-quality-menu/1/videojs-quality-menu.min.js"></script>
+<script src="https://unpkg.com/videojs-max-quality-selector@0.9.1/dist/videojs-max-quality-selector.min.js"></script>
+	
+	<script>
+var player = videojs('video1');
+player.maxQualitySelector({
+  'defaultQuality': 2 // Make the video start playing at the highest quality possible
+});
+var myPlayer = videojs('video1');
+myPlayer.ready(function () {
+  console.log("downloadvideo");
+  });
+</script>
+	
+<script>
+  
+  (function(window, videojs) {
+     var player = window.player = videojs('video1');
+	  player.ready(function() {
+	  const muteButton = document.querySelector("");
+		  muteButton.click();
+			
+		  var promise = player.play();
+		  if (promise !== undefined) {
+			  promise.then(function() {
+				  const muteButton = document.querySelector("");
+				}).catch(function(error) {
+				});
+			} else {
+			}
+		  });
+player.maxQualitySelector({
+		  displayCurrentQuality: false,
+	  });
+	}(window, window.videojs));
+  
+  </script>
 	
 	
 
-<body>
-<video
-  id="video1"
-  class="video-js vjs-fill vjs-big-play-centered"
-  poster="/im/tvrzPoster.gif"
-  controls>
-</video>
-	
-<template>
-	<div>ℚ<div id="tvrzQualContainer" tabindex="100" onclick="event.preventDefault();event.stopPropagation();setQualityLevel(event.target.id);"><div><span style="margin:auto; font-weight:700;">Qualités</span><br></div><div>✔Auto</div></div></div>
-	
-	<div>🛈<div id="tvrzInfoContainer"><div><span style="margin:auto; font-weight:700;">Infos techniques</span><br><br></div></div></div>
-</template>
+ 
 
+ <script src="https://www.goiptv.top/site_assets/videojs_player/plugins/videojs-chromecast.min.js"></script>
+			
+<script src="https://vsalema.github.io/play3/js/play52.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"></script> 
 
-<script src="https://tvradiozap.eu/js/play60.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.0/js/jquery.nice-select.min.js"></script> 
 </body>
 </html>
+
+
+
+
+
+
+
