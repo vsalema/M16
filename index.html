@@ -97,6 +97,29 @@ html, body {
   height: 100vh;   /* important : 100% de la hauteur */
   object-fit: cover; /* évite les bandes noires */
 }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: black;
+}
+
+/* Conteneur du player plein écran */
+#video1 {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Vidéo à l'intérieur du player */
+.video-js .vjs-tech {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;   /* 🔴 important : on voit TOUTE l'image */
+  object-position: center;
+}
+
 </style>
 
 </head>
@@ -108,10 +131,11 @@ html, body {
 	
 
 <body>
- <video id="video1"
-       class="video-js vjs-fill vjs-big-play-centered"
-       poster="/im/tvrzPoster.gif"
-       controls>
+<video
+  id="video1"
+  class="video-js vjs-fill vjs-big-play-centered"
+  poster="/im/tvrzPoster.gif"
+  controls>
 </video>
 	
 <template>
